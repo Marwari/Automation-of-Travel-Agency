@@ -35,8 +35,20 @@ public class VehicleDaoImpl implements VehicleDao {
 
 	@Override
 	public int deleteProfile(ArrayList<String> userIds) {
-		// TODO Auto-generated method stub
-		return 0;
+		int count=0;
+		try {
+			PreparedStatement ps=
+					con.prepareStatement("delete * from ata_tbl_vehicle where userid=? ");
+			for(int i=0;i<userIds.size();i++)
+			{
+				ps.setString(1, userIds.get(i));
+				ps.executeQuery();
+				count++;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return count;
 	}
 
 	@Override

@@ -2,7 +2,9 @@ package com.ata.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import com.ata.bean.ProfileBean;
 import com.ata.util.DBUtil;
@@ -18,7 +20,7 @@ public class ProfileDaoImpl implements ProfileDao {
 			ps.setString(1, profileBean.getUserId());
 			ps.setString(2, profileBean.getFirstName());
 			ps.setString(3, profileBean.getLastName());
-			ps.setString(4, profileBean.getDateOfBirth());
+			ps.setDate(4, profileBean.getDateOfBirth());
 			ps.setString(5, profileBean.getGender());
 			ps.setString(6, profileBean.getStreet());
 			ps.setString(7, profileBean.getLocation());
@@ -40,14 +42,20 @@ public class ProfileDaoImpl implements ProfileDao {
 
 	@Override
 	public int deleteProfile(ArrayList<String> userIds) {
+		int count=0;
 		try {
-			PreparedStatement ps= 
-					con.prepareStatement("delete from ata_tbl_user_profile where userid=?");
-			ps.setString(1, arg1);
+			PreparedStatement ps=
+					con.prepareStatement("delete * from ata_tbl_user_profile where userid=?");
+			for(int i=0;i<userIds.size();i++)
+			{
+				ps.setString(1, userIds.get(i));
+				ps.executeQuery();
+				count++;
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return 0;
+		return count;
 	}
 
 	@Override
@@ -58,7 +66,7 @@ public class ProfileDaoImpl implements ProfileDao {
 					con.prepareStatement("update ata_tbl_user_profile SET firstname=?,lastname=?,dateofbirth=?,gender=?,street=?,location=?,city=?,state=?,pincode=?,mobileno=?,emailid=? where userid=?");
 			ps.setString(1, profileBean.getFirstName());
 			ps.setString(2,profileBean.getLastName());
-			ps.setString(3, profileBean.getDateOfBirth());
+			ps.setDate(3, profileBean.getDateOfBirth());
 			ps.setString(4, profileBean.getGender());
 			ps.setString(5, profileBean.getStreet());
 			ps.setString(6, profileBean.getLocation());
@@ -79,14 +87,39 @@ public class ProfileDaoImpl implements ProfileDao {
 
 	@Override
 	public ProfileBean findByid(String userId) {
-		// TODO Auto-generated method stub
+		
+		
 		return null;
 	}
 
 	@Override
 	public ArrayList<ProfileBean> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<ProfileBean> profiles= new ArrayList<ProfileBean>();
+		Statement statement;
+		try{
+			statement = con.createStatement();
+			ResultSet resultSet = statement.executeQuery("select * from ata_tbl_user_profile");
+			while(resultSet.next())
+			{
+				ProfileBean profile = new ProfileBean();
+				profile.setUserId(resultSet.getString(1));
+				profile.setFirstName(resultSet.getString(2));
+				profile.setLastName(resultSet.getString(3));
+				profile.setDateOfBirth(resultSet.getDate(4));
+				profile.setGender(resultSet.getString(5));
+				profile.setStreet(resultSet.getString(6));
+				profile.setLocation(resultSet.getString(7));
+				profile.setCity(resultSet.getString(8));
+				profile.setState(resultSet.getString(9));
+				profile.setPincode(resultSet.getString(10));
+				profile.setMobileNo(resultSet.getString(11));
+				profile.setEmailId(resultSet.getString(12));
+				profiles.add(profile);
+			}
+		} catch(SQLException e){
+			e.getStackTrace();
+		}
+		return profiles;
 	}
 
 }
