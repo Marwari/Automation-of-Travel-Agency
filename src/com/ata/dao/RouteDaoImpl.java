@@ -19,8 +19,8 @@ public class RouteDaoImpl implements RouteDao {
 			ps.setString(1, routeBean.getRouteId());
 			ps.setString(2, routeBean.getSource());
 			ps.setString(3, routeBean.getDestination());
-			ps.setLong(4, routeBean.getDistance());
-			ps.setString(5, routeBean.getTravelDuration());
+			ps.setDouble(4, routeBean.getDistance());
+			ps.setDouble(5, routeBean.getTravelDuration());
 			int a=ps.executeUpdate();
 			if(a>0)
 				return "Route Created.";
@@ -29,19 +29,44 @@ public class RouteDaoImpl implements RouteDao {
 		} catch(SQLException e){
 			e.printStackTrace();
 		}
-		return "Error"
+		return "Error";
 	}
 
 	@Override
 	public int deleteProfile(ArrayList<String> userIds) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+		int count=0;
+		try {
+			PreparedStatement ps=
+					con.prepareStatement("delete * from ata_tbl_route where routeid=?");
+			for(int i=0;i<userIds.size();i++)
+			{
+				ps.setString(1, userIds.get(i));
+				ps.executeQuery();
+				count++;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return count;	}
 
 	@Override
 	public boolean updateProfile(RouteBean routeBean) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean flag=false;
+		try {
+			PreparedStatement ps=
+					con.prepareStatement("update ata_tbl_user_profile SET source=?,destination=?,distance=?,travelduration=? where routeid=?");
+			ps.setString(1, routeBean.getSource());
+			ps.setString(2, routeBean.getDestination());
+			ps.setDouble(3, routeBean.getDistance());
+			ps.setDouble(4, routeBean.getTravelDuration());
+			ps.setString(5, routeBean.getRouteId());
+			ps.executeUpdate();
+			flag=true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return flag;
+		}
+		return flag;
 	}
 
 	@Override

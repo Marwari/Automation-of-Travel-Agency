@@ -38,14 +38,42 @@ public class DriverDaoImpl implements DriverDao {
 
 	@Override
 	public int deleteProfile(ArrayList<String> userIds) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+		int count=0;
+		try {
+			PreparedStatement ps=
+					con.prepareStatement("delete * from ata_tbl_driver where driverid=?");
+			for(int i=0;i<userIds.size();i++)
+			{
+				ps.setString(1, userIds.get(i));
+				ps.executeQuery();
+				count++;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return count;	}
 
 	@Override
 	public boolean updateProfile(DriverBean driverBean) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean flag=false;
+		try {
+			PreparedStatement ps=
+					con.prepareStatement("update ata_tbl_driver SET name=?,street=?,location=?,city=?,state=?,mobileno=?,licensenumber=? where driverid=?");
+			ps.setString(1, driverBean.getName());
+			ps.setString(2, driverBean.getStreet());
+			ps.setString(3, driverBean.getLocation());
+			ps.setString(4, driverBean.getCity());
+			ps.setString(5, driverBean.getState());
+			ps.setString(6, driverBean.getMobileNo());
+			ps.setString(7, driverBean.getLicenseNumber());
+			ps.setString(8, driverBean.getDriverId());
+			ps.executeUpdate();
+			flag=true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return flag;
+		}
+		return flag;
 	}
 
 	@Override

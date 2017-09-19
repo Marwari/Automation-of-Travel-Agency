@@ -87,9 +87,30 @@ public class ProfileDaoImpl implements ProfileDao {
 
 	@Override
 	public ProfileBean findByid(String userId) {
-		
-		
-		return null;
+		ProfileBean profileBean = new ProfileBean();
+		try {
+			PreparedStatement ps = 
+					con.prepareStatement("select * from ata_tbl_user_profile where userid=?");
+			ResultSet rs= ps.executeQuery();
+			rs.next();
+			profileBean.setUserId(rs.getString(1));
+			profileBean.setFirstName(rs.getString(2));
+			profileBean.setLastName(rs.getString(3));
+			profileBean.setDateOfBirth(rs.getDate(4));
+			profileBean.setGender(rs.getString(5));
+			profileBean.setStreet(rs.getString(6));
+			profileBean.setLocation(rs.getString(7));
+			profileBean.setCity(rs.getString(8));
+			profileBean.setState(rs.getString(9));
+			profileBean.setPincode(rs.getString(10));
+			profileBean.setEmailId(rs.getString(11));
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+			
+		}
+		return profileBean;
 	}
 
 	@Override

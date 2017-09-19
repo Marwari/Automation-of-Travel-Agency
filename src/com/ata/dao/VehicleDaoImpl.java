@@ -20,8 +20,8 @@ public class VehicleDaoImpl implements VehicleDao {
 			ps.setString(2, vehicleBean.getName());
 			ps.setString(3, vehicleBean.getType());
 			ps.setString(4, vehicleBean.getRegistrationNumber());
-			ps.setLong(5, vehicleBean.getSeatingCapacity());
-			ps.setLong(6, (long) vehicleBean.getFarePerKM());
+			ps.setDouble(5, vehicleBean.getSeatingCapacity());
+			ps.setDouble(6, vehicleBean.getFarePerKM());
 			int a=ps.executeUpdate();
 			if(a>0)
 				return "Vehicle Added.";
@@ -38,7 +38,7 @@ public class VehicleDaoImpl implements VehicleDao {
 		int count=0;
 		try {
 			PreparedStatement ps=
-					con.prepareStatement("delete * from ata_tbl_vehicle where userid=? ");
+					con.prepareStatement("delete * from ata_tbl_vehicle where vehicleid=? ");
 			for(int i=0;i<userIds.size();i++)
 			{
 				ps.setString(1, userIds.get(i));
@@ -53,9 +53,23 @@ public class VehicleDaoImpl implements VehicleDao {
 
 	@Override
 	public boolean updateProfile(VehicleBean vehicleBean) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+		boolean flag=false;
+		try {
+			PreparedStatement ps=
+					con.prepareStatement("update ata_tbl_user_profile SET name=?,type=?,registrationnumber=?,seatingcapacity=?,fareperkm=? where vehicleid=?");
+			ps.setString(1, vehicleBean.getName());
+			ps.setString(2, vehicleBean.getType());
+			ps.setString(3, vehicleBean.getRegistrationNumber());
+			ps.setDouble(4, vehicleBean.getSeatingCapacity());
+			ps.setDouble(5, vehicleBean.getFarePerKM());
+			ps.setString(6, vehicleBean.getVehicleId());
+			ps.executeUpdate();
+			flag=true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return flag;
+		}
+		return flag;	}
 
 	@Override
 	public VehicleBean findByid(String userId) {

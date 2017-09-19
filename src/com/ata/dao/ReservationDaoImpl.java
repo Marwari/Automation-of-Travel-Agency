@@ -20,11 +20,11 @@ public class ReservationDaoImpl implements ReservationDao {
 			ps.setString(2, reservationBean.getUserId());
 			ps.setString(3, reservationBean.getVehicleId());
 			ps.setString(4, reservationBean.getRouteId());
-			ps.setString(5, reservationBean.getBookingDate());
-			ps.setString(6, reservationBean.getJourneyDate());
+			ps.setDate(5, reservationBean.getBookingDate());
+			ps.setDate(6, reservationBean.getJourneyDate());
 			ps.setString(7, reservationBean.getDriverId());
 			ps.setString(8, reservationBean.getBookingStatus());
-			ps.setString(9, reservationBean.getTotalFare());
+			ps.setDouble(9, reservationBean.getTotalFare());
 			ps.setString(10, reservationBean.getBoardingPoint());
 			ps.setString(11, reservationBean.getDropPoint());
 			int a=ps.executeUpdate();
@@ -35,20 +35,51 @@ public class ReservationDaoImpl implements ReservationDao {
 		} catch(SQLException e){
 			e.printStackTrace();
 		}
-		return "Error"
+		return "Error";
 	}
 
 	@Override
 	public int deleteProfile(ArrayList<String> userIds) {
-		// TODO Auto-generated method stub
-		return 0;
+		int count=0;
+		try {
+			PreparedStatement ps=
+					con.prepareStatement("delete * from ata_tbl_reservation where reservationid=?");
+			for(int i=0;i<userIds.size();i++)
+			{
+				ps.setString(1, userIds.get(i));
+				ps.executeQuery();
+				count++;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return count;
 	}
 
 	@Override
 	public boolean updateProfile(ReservationBean reservationBean) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+		boolean flag=false;
+		try {
+			PreparedStatement ps=
+					con.prepareStatement("update ata_tbl_reservation SET userid=?,vehicleid=?,routeid=?,bookingdate=?,journeydate=?,driverid=?,bookingstatus=?,totalfare=?,boardingpoint=?,droppoing=? where reservationrid=?");
+			ps.setString(1, reservationBean.getUserId());
+			ps.setString(2, reservationBean.getVehicleId());
+			ps.setString(3, reservationBean.getRouteId());
+			ps.setDate(4, reservationBean.getBookingDate());
+			ps.setDate(5, reservationBean.getJourneyDate());
+			ps.setString(6, reservationBean.getDriverId());
+			ps.setString(7, reservationBean.getBookingStatus());
+			ps.setDouble(8, reservationBean.getTotalFare());
+			ps.setString(9, reservationBean.getBoardingPoint());
+			ps.setString(10, reservationBean.getDropPoint());
+			ps.setString(11, reservationBean.getReservationId());
+			ps.executeUpdate();
+			flag=true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return flag;
+		}
+		return flag;	}
 
 	@Override
 	public ReservationBean findByid(String userId) {

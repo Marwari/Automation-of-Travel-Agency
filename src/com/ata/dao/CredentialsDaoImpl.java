@@ -2,10 +2,12 @@ package com.ata.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.ata.bean.CredentialsBean;
+import com.ata.bean.ProfileBean;
 import com.ata.util.DBUtil;
 
 public class CredentialsDaoImpl implements CredentialsDao {
@@ -33,20 +35,66 @@ public class CredentialsDaoImpl implements CredentialsDao {
 
 	@Override
 	public int deleteProfile(ArrayList<String> userIds) {
-		// TODO Auto-generated method stub
-		return 0;
+		int count=0;
+		try {
+			PreparedStatement ps=
+					con.prepareStatement("delete * from ata_tbl_user_credentials where userid=?");
+			for(int i=0;i<userIds.size();i++)
+			{
+				ps.setString(1, userIds.get(i));
+				ps.executeQuery();
+				count++;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return count;
 	}
 
 	@Override
 	public boolean updateProfile(CredentialsBean credentialsBean) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+		boolean flag=false;
+		try {
+			PreparedStatement ps=
+					con.prepareStatement("update ata_tbl_user_credentials SET password=?, usertype=?, loginstatus=? where userid=?");
+			ps.setString(1, credentialsBean.getPassword());
+			ps.setString(2, credentialsBean.getUserType());
+			ps.setInt(3, credentialsBean.getLoginStatus());
+			ps.setString(4, credentialsBean.getUserId());
+			ps.executeUpdate();
+			flag=true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return flag;
+		}
+		return flag;	}
 
 	@Override
 	public CredentialsBean findByid(String userId) {
-		// TODO Auto-generated method stub
-		return null;
+		CredentialsBean credentialsBean = new CredentialsBean();
+		try {
+			PreparedStatement ps = 
+					con.prepareStatement("select * from ata_tbl_credentials where userid=?");
+			ResultSet rs= ps.executeQuery();
+			rs.next();
+			credentialsBean.setUserId(rs.getString(1));
+			credentialsBean.setFirstName(rs.getString(2));
+			credentialsBean.setLastName(rs.getString(3));
+			credentialsBean.setDateOfBirth(rs.getDate(4));
+			credentialsBean.setGender(rs.getString(5));
+			credentialsBean.setStreet(rs.getString(6));
+			credentialsBean.setLocation(rs.getString(7));
+			credentialsBean.setCity(rs.getString(8));
+			credentialsBean.setState(rs.getString(9));
+			credentialsBean.setPincode(rs.getString(10));
+			credentialsBean.setEmailId(rs.getString(11));
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+			
+		}
+		return profileBean;
 	}
 
 	@Override
