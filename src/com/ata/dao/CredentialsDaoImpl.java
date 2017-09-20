@@ -77,24 +77,17 @@ public class CredentialsDaoImpl implements CredentialsDao {
 					con.prepareStatement("select * from ata_tbl_credentials where userid=?");
 			ResultSet rs= ps.executeQuery();
 			rs.next();
-			credentialsBean.setUserId(rs.getString(1));
-			credentialsBean.setFirstName(rs.getString(2));
-			credentialsBean.setLastName(rs.getString(3));
-			credentialsBean.setDateOfBirth(rs.getDate(4));
-			credentialsBean.setGender(rs.getString(5));
-			credentialsBean.setStreet(rs.getString(6));
-			credentialsBean.setLocation(rs.getString(7));
-			credentialsBean.setCity(rs.getString(8));
-			credentialsBean.setState(rs.getString(9));
-			credentialsBean.setPincode(rs.getString(10));
-			credentialsBean.setEmailId(rs.getString(11));
+			credentialsBean.setPassword(rs.getString(1));
+			credentialsBean.setUserType(rs.getString(2));
+			credentialsBean.setLoginStatus(rs.getInt(3));
+			credentialsBean.setUserId(rs.getString(4));
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 			
 		}
-		return profileBean;
+		return credentialsBean;
 	}
 
 	@Override
