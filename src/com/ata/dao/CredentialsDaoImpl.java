@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.ata.bean.CredentialsBean;
-import com.ata.bean.ProfileBean;
 import com.ata.util.DBUtil;
 
 public class CredentialsDaoImpl implements CredentialsDao {
