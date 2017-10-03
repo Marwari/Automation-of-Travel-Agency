@@ -10,7 +10,9 @@
 <!-- including header file -->
 	<%@include file="includes/header.html" %>
 <body>
-Body is here.
+<!-- including body for index page -->
+	<%@include file="includes/indexpage-body.html" %>
+
 <script src="js/bootstrap.js"></script>
 </body>
 <!-- including footer file -->

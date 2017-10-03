@@ -7,13 +7,18 @@ import com.ata.bean.DriverBean;
 import com.ata.bean.ReservationBean;
 import com.ata.bean.RouteBean;
 import com.ata.bean.VehicleBean;
+import com.ata.dao.VehicleDao;
+import com.ata.dao.VehicleDaoImpl;
 
 public class AdministratorImpl implements Administrator {
 
 	@Override
 	public String addVehicle(VehicleBean vehicleBean) {
-		// TODO Auto-generated method stub
-		return null;
+		VehicleDao vdao = new VehicleDaoImpl();
+		String vehicle = vdao.createProfile(vehicleBean);
+		
+		
+		return vehicle;
 	}
 
 	@Override
