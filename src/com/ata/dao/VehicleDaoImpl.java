@@ -12,7 +12,7 @@ public class VehicleDaoImpl implements VehicleDao {
 	Connection con= DBUtil.getConnection();
 
 	@Override
-	public String createProfile(VehicleBean vehicleBean) {
+	public String createVehicle(VehicleBean vehicleBean) {
 		try{
 			PreparedStatement ps=
 					con.prepareStatement("insert into ata_tbl_vehicle values(?,?,?,?,?,?)");
@@ -34,7 +34,7 @@ public class VehicleDaoImpl implements VehicleDao {
 	}
 
 	@Override
-	public int deleteProfile(ArrayList<String> userIds) {
+	public int deleteVehicle(ArrayList<String> userIds) {
 		int count=0;
 		try {
 			PreparedStatement ps=
@@ -52,11 +52,11 @@ public class VehicleDaoImpl implements VehicleDao {
 	}
 
 	@Override
-	public boolean updateProfile(VehicleBean vehicleBean) {
+	public boolean updateVehicle(VehicleBean vehicleBean) {
 		boolean flag=false;
 		try {
 			PreparedStatement ps=
-					con.prepareStatement("update ata_tbl_user_profile SET name=?,type=?,registrationnumber=?,seatingcapacity=?,fareperkm=? where vehicleid=?");
+					con.prepareStatement("update ata_tbl_vehicle SET name=?,type=?,registrationnumber=?,seatingcapacity=?,fareperkm=? where vehicleid=?");
 			ps.setString(1, vehicleBean.getName());
 			ps.setString(2, vehicleBean.getType());
 			ps.setString(3, vehicleBean.getRegistrationNumber());

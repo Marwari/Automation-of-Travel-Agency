@@ -6,9 +6,9 @@ import com.ata.bean.VehicleBean;
 
 
 public interface VehicleDao {
-	String createProfile(VehicleBean vehicleBean);
-	int deleteProfile(ArrayList<String> userIds);
-	boolean updateProfile(VehicleBean vehicleBean);
+	String createVehicle(VehicleBean vehicleBean);
+	int deleteVehicle(ArrayList<String> userIds);
+	boolean updateVehicle(VehicleBean vehicleBean);
 	VehicleBean findByid(String userId);
 	ArrayList<VehicleBean> findAll();
 

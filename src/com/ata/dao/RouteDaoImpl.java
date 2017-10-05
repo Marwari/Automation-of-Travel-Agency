@@ -12,7 +12,7 @@ public class RouteDaoImpl implements RouteDao {
 	Connection con= DBUtil.getConnection();
 
 	@Override
-	public String createProfile(RouteBean routeBean) {
+	public String createRoute(RouteBean routeBean) {
 		try{
 			PreparedStatement ps=
 					con.prepareStatement("insert into ata_tbl_route values(?,?,?,?,?)");
@@ -33,7 +33,7 @@ public class RouteDaoImpl implements RouteDao {
 	}
 
 	@Override
-	public int deleteProfile(ArrayList<String> userIds) {
+	public int deleteRoute(ArrayList<String> userIds) {
 		int count=0;
 		try {
 			PreparedStatement ps=
@@ -50,11 +50,11 @@ public class RouteDaoImpl implements RouteDao {
 		return count;	}
 
 	@Override
-	public boolean updateProfile(RouteBean routeBean) {
+	public boolean updateRoute(RouteBean routeBean) {
 		boolean flag=false;
 		try {
 			PreparedStatement ps=
-					con.prepareStatement("update ata_tbl_user_profile SET source=?,destination=?,distance=?,travelduration=? where routeid=?");
+					con.prepareStatement("update ata_tbl_user_Route SET source=?,destination=?,distance=?,travelduration=? where routeid=?");
 			ps.setString(1, routeBean.getSource());
 			ps.setString(2, routeBean.getDestination());
 			ps.setDouble(3, routeBean.getDistance());

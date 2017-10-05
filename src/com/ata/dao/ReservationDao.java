@@ -6,9 +6,9 @@ import com.ata.bean.ReservationBean;
 
 
 public interface ReservationDao {
-	String createProfile(ReservationBean reservationBean);
-	int deleteProfile(ArrayList<String> userIds);
-	boolean updateProfile(ReservationBean reservationBean);
+	String createReservation(ReservationBean reservationBean);
+	int deleteReservation(ArrayList<String> userIds);
+	boolean updateReservation(ReservationBean reservationBean);
 	ReservationBean findByid(String userId);
 	ArrayList<ReservationBean> findAll();
 

@@ -15,7 +15,7 @@ public class AdministratorImpl implements Administrator {
 	@Override
 	public String addVehicle(VehicleBean vehicleBean) {
 		VehicleDao vdao = new VehicleDaoImpl();
-		String vehicle = vdao.createProfile(vehicleBean);
+		String vehicle = vdao.createVehicle(vehicleBean);
 		
 		
 		return vehicle;

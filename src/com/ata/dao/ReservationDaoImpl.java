@@ -12,7 +12,7 @@ public class ReservationDaoImpl implements ReservationDao {
 	Connection con= DBUtil.getConnection();
 
 	@Override
-	public String createProfile(ReservationBean reservationBean) {
+	public String createReservation(ReservationBean reservationBean) {
 		try{
 			PreparedStatement ps=
 					con.prepareStatement("insert into ata_tbl_reservation values(?,?,?,?,?,?,?,?,?,?,?)");
@@ -39,7 +39,7 @@ public class ReservationDaoImpl implements ReservationDao {
 	}
 
 	@Override
-	public int deleteProfile(ArrayList<String> userIds) {
+	public int deleteReservation(ArrayList<String> userIds) {
 		int count=0;
 		try {
 			PreparedStatement ps=
@@ -57,7 +57,7 @@ public class ReservationDaoImpl implements ReservationDao {
 	}
 
 	@Override
-	public boolean updateProfile(ReservationBean reservationBean) {
+	public boolean updateReservation(ReservationBean reservationBean) {
 		boolean flag=false;
 		try {
 			PreparedStatement ps=

@@ -6,9 +6,9 @@ import com.ata.bean.RouteBean;
 
 
 public interface RouteDao {
-	String createProfile(RouteBean routeBean);
-	int deleteProfile(ArrayList<String> userIds);
-	boolean updateProfile(RouteBean routeBean);
+	String createRoute(RouteBean routeBean);
+	int deleteRoute(ArrayList<String> userIds);
+	boolean updateRoute(RouteBean routeBean);
 	RouteBean findByid(String userId);
 	ArrayList<RouteBean> findAll();
 }

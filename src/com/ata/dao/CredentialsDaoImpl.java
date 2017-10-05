@@ -13,7 +13,7 @@ public class CredentialsDaoImpl implements CredentialsDao {
 	Connection con= DBUtil.getConnection();
 
 	@Override
-	public String createProfile(CredentialsBean credentialsBean) {
+	public String createCredentials(CredentialsBean credentialsBean) {
 		try{
 			PreparedStatement ps=
 					con.prepareStatement("insert into ata_tbl_user_credentials values(?,?,?,?)");
@@ -33,7 +33,7 @@ public class CredentialsDaoImpl implements CredentialsDao {
 		}
 
 	@Override
-	public int deleteProfile(ArrayList<String> userIds) {
+	public int deleteCredentials(ArrayList<String> userIds) {
 		int count=0;
 		try {
 			PreparedStatement ps=
@@ -51,7 +51,7 @@ public class CredentialsDaoImpl implements CredentialsDao {
 	}
 
 	@Override
-	public boolean updateProfile(CredentialsBean credentialsBean) {
+	public boolean updateCredentials(CredentialsBean credentialsBean) {
 		boolean flag=false;
 		try {
 			PreparedStatement ps=

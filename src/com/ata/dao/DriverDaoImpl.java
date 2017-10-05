@@ -12,7 +12,7 @@ public class DriverDaoImpl implements DriverDao {
 	Connection con= DBUtil.getConnection();
 
 	@Override
-	public String createProfile(DriverBean driverBean) {
+	public String createDriver(DriverBean driverBean) {
 		try{
 			PreparedStatement ps=
 					con.prepareStatement("insert into ata_tbl_driver values(?,?,?,?,?,?,?,?,?)");
@@ -37,7 +37,7 @@ public class DriverDaoImpl implements DriverDao {
 	}
 
 	@Override
-	public int deleteProfile(ArrayList<String> userIds) {
+	public int deleteDriver(ArrayList<String> userIds) {
 		int count=0;
 		try {
 			PreparedStatement ps=
@@ -54,7 +54,7 @@ public class DriverDaoImpl implements DriverDao {
 		return count;	}
 
 	@Override
-	public boolean updateProfile(DriverBean driverBean) {
+	public boolean updateDriver(DriverBean driverBean) {
 		boolean flag=false;
 		try {
 			PreparedStatement ps=
